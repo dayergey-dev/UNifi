@@ -1,0 +1,33 @@
+{
+  "mcpServers": {
+    "unifi-network": {
+      "command": "unifi-network-mcp",
+      "args": [],
+      "env": {
+        "UNIFI_HOST": "",
+        "UNIFI_USERNAME": "",
+        "UNIFI_PASSWORD": "",
+        "UNIFI_SITE": "default",
+        "UNIFI_VERIFY_SSL": "false"
+      }
+    },
+    "sonicwall": {
+      "command": "node",
+      "args": ["vendor/sonicwall-mcp-server/index.js"],
+      "env": {
+        "SONICWALL_HOST": "",
+        "SONICWALL_USERNAME": "",
+        "SONICWALL_PASSWORD": ""
+      }
+    },
+    "synology": {
+      "command": "python",
+      "args": ["vendor/mcp-server-synology/main.py"],
+      "env": {
+        "SYNOLOGY_HOST": "",
+        "SYNOLOGY_USERNAME": "",
+        "SYNOLOGY_PASSWORD": ""
+      }
+    }
+  }
+}
