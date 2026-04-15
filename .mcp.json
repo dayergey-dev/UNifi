@@ -12,13 +12,8 @@
       }
     },
     "sonicwall": {
-      "command": "node",
-      "args": ["vendor/sonicwall-mcp-server/index.js"],
-      "env": {
-        "SONICWALL_HOST": "",
-        "SONICWALL_USERNAME": "",
-        "SONICWALL_PASSWORD": ""
-      }
+      "type": "sse",
+      "url": "http://localhost:3000/mcp/v1/sse"
     },
     "synology": {
       "command": "python",
