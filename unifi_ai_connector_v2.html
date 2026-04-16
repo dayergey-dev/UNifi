@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniFi Cloud × Perplexity / Claude</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f5f3;min-height:100vh;padding:24px 16px;color:#111}
+.w{max-width:760px;margin:0 auto}
+.card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;margin-bottom:10px;overflow:hidden}
+.hdr{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;border-bottom:1px solid #e5e5e0}
+.hdr:hover{background:#fafaf8}
+.dot{width:8px;height:8px;border-radius:50%}
+.dg{background:#aaa}.dok{background:#3b6d11}.derr{background:#a32d2d}.dlod{background:#854f0b}
+.htitle{font-size:13px;font-weight:500}
+.hsub{font-size:12px;margin-left:auto}
+.ok{color:#0f6e56}.err{color:#993c1d}.muted{color:#888}
+.body{padding:14px 16px}
+.lbl{font-size:11px;color:#666;margin-bottom:4px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.hint{font-size:10px;color:#aaa;margin-top:3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g1{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px}
+input,select{width:100%;padding:7px 10px;font-size:13px;border:1px solid #d0d0c8;border-radius:8px;background:#fafaf8;color:#111;font-family:monospace;outline:none}
+input:focus{border-color:#1d9e75;box-shadow:0 0 0 2px rgba(29,158,117,.15)}
+.brow{display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid #e5e5e0}
+button{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:13px;font-weight:500;border-radius:8px;border:1px solid #d0d0c8;background:transparent;color:#111;cursor:pointer}
+button:hover{background:#fafaf8}
+.bt{background:#0f6e56;color:#e1f5ee;border-color:#0f6e56}
+.bt:hover{background:#085041}
+button:disabled{opacity:.4;cursor:not-allowed}
+.bs{padding:5px 10px;font-size:12px}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid #ddd;border-top-color:#1d9e75;border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 16px}
+.sc{background:#fafaf8;border-radius:8px;padding:10px 12px}
+.sl{font-size:11px;color:#888;margin-bottom:3px}
+.sv{font-size:20px;font-weight:500;font-family:monospace}
+.ss{font-size:10px;color:#bbb;margin-top:2px}
+.tabs{display:flex;border-bottom:1px solid #e5e5e0;padding:0 16px}
+.tab{padding:8px 14px;font-size:12px;font-weight:500;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:#0f6e56;border-color:#0f6e56}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:6px 16px;font-size:11px;font-weight:500;color:#888;border-bottom:1px solid #e5e5e0;text-transform:uppercase;letter-spacing:.04em}
+td{padding:8px 16px;border-bottom:1px solid #e5e5e0;font-family:monospace}
+tr:last-child td{border:none}
+tr:hover td{background:#fafaf8}
+.bdg{display:inline-block;padding:2px 7px;border-radius:100px;font-size:10px;font-weight:500}
+.bgr{background:#eaf3de;color:#3b6d11}.bam{background:#faeeda;color:#854f0b}
+.msgs{padding:12px 16px;min-height:180px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.msg{display:flex;gap:8px}
+.mu{flex-direction:row-reverse}
+.av{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;background:#f0f0ec;color:#666}
+.mu .av{background:#e1f5ee;color:#0f6e56}
+.bbl{max-width:88%;padding:8px 12px;font-size:13px;line-height:1.6;border-radius:10px;background:#f0f0ec}
+.mu .bbl{background:#e1f5ee;color:#085041}
+.mt{font-size:10px;color:#bbb;margin-top:2px;text-align:right}
+.pills{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 8px}
+.pill{padding:4px 10px;border-radius:100px;font-size:11px;border:1px solid #ddd;background:#fafaf8;color:#888;cursor:pointer}
+.pill:hover{background:#fff;color:#111}
+.crow{display:flex;gap:8px;padding:10px 16px;border-top:1px solid #e5e5e0}
+textarea{flex:1;padding:8px 12px;font-size:13px;border:1px solid #d0d0c8;border-radius:8px;background:#fafaf8;color:#111;outline:none;font-family:system-ui;resize:none}
+textarea:focus{border-color:#1d9e75}
+.warn{display:flex;gap:8px;background:#faeeda;border:1px solid #fac775;border-radius:8px;padding:10px 14px;font-size:12px;color:#633806;margin-bottom:10px}
+.code{font-family:monospace;font-size:11px;background:#fafaf8;border:1px solid #e5e5e0;border-radius:8px;padding:10px 14px;margin:8px 0;line-height:1.7;color:#555;overflow-x:auto;white-space:pre}
+</style>
+</head>
+<body>
+<div class="w">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#e1f5ee"/><path d="M7 14c1.333-1.333 2.667-2 4-2s2.667.667 4 2" stroke="#0f6e56" stroke-width="1.8" stroke-linecap="round"/><path d="M4.5 11.5C7 9 9.333 7.75 12 7.75s5 1.25 7.5 3.75" stroke="#0f6e56" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1.2" fill="#0f6e56"/></svg>
+    <span style="font-size:15px;font-weight:500">UniFi Cloud × Perplexity / Claude</span>
+    <span id="lbadge" style="display:none;margin-left:auto;font-size:11px;background:#e1f5ee;color:#0f6e56;padding:2px 10px;border-radius:100px;font-weight:500"></span>
+  </div>
+
+  <div class="warn">
+    <span>⚠</span>
+    <div><strong>Rotate your API key:</strong> Any key shared in chat should be replaced immediately — UniFi OS → Settings → Control Plane → API Keys → Delete &amp; recreate. Store keys in <code>.env</code>, never in code or chat.</div>
+  </div>
+
+  <div class="card">
+    <div class="hdr" onclick="tog()">
+      <div class="dot dg" id="cdot"></div>
+      <span class="htitle">Configuration</span>
+      <span class="hsub muted" id="cst">Enter credentials</span>
+    </div>
+    <div id="cbody">
+      <div class="body">
+        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">UniFi Cloud</div>
+        <div class="g1">
+          <div>
+            <div class="lbl">Console ID or full UI.com URL</div>
+            <input id="cid" placeholder="784558BB5B5D… or paste full unifi.ui.com URL" />
+            <div class="hint">Parsed automatically from the URL you share</div>
+          </div>
+        </div>
+        <div class="g2">
+          <div>
+            <div class="lbl">UniFi API Key</div>
+            <input id="ukey" type="password" placeholder="From UniFi OS → API Keys" />
+            <div class="hint">Settings → Control Plane → API Keys → Create</div>
+          </div>
+          <div>
+            <div class="lbl">Site ID</div>
+            <input id="site" placeholder="default" value="default" />
+          </div>
+        </div>
+        <div style="font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;margin-top:4px">AI Provider</div>
+        <div class="g2">
+          <div>
+            <div class="lbl">Perplexity API Key (optional)</div>
+            <input id="pkey" type="password" placeholder="pplx-… leave blank for Claude" oninput="upAI()" />
+          </div>
+          <div>
+            <div class="lbl">Use</div>
+            <select id="aip"><option value="claude">Claude Sonnet (built-in)</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="brow">
+        <button class="bt" onclick="conn()">Connect</button>
+        <button class="bs" onclick="demo()">Demo data</button>
+        <span id="cmsg" style="font-size:12px;color:#888;margin-left:4px"></span>
+      </div>
+      <div style="padding:8px 16px;border-top:1px solid #e5e5e0">
+        <div class="lbl" style="margin-bottom:4px">Vercel proxy route (fixes CORS — drop into api/unifi.js)</div>
+        <div class="code">export default async function handler(req, res) {
+  const path = req.query.path || "stat/device";
+  const site = req.query.site || "default";
+  const r = await fetch(
+    `https://unifi.ui.com/proxy/network/api/s/${site}/${path}`,
+    { headers: { "X-API-KEY": process.env.UNIFI_API_KEY } }
+  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.json(await r.json());
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="scard" style="display:none">
+    <div class="stats">
+      <div class="sc"><div class="sl">Devices</div><div class="sv" id="sd">—</div><div class="ss" id="sds">—</div></div>
+      <div class="sc"><div class="sl">Clients</div><div class="sv" id="sc2">—</div><div class="ss">connected</div></div>
+      <div class="sc"><div class="sl">Alerts</div><div class="sv" id="sa">—</div><div class="ss" id="sas">—</div></div>
+      <div class="sc"><div class="sl">APs</div><div class="sv" id="sap">—</div><div class="ss">access points</div></div>
+    </div>
+  </div>
+
+  <div class="card" id="mcard" style="display:none">
+    <div class="tabs">
+      <div class="tab on" id="tdev" onclick="stab('dev')">Devices</div>
+      <div class="tab" id="tchat" onclick="stab('chat')">AI Chat</div>
+    </div>
+    <div id="pdev" style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Name</th><th>Model</th><th>IP</th><th>MAC</th><th>Status</th><th>Uptime</th></tr></thead>
+        <tbody id="dtbody"></tbody>
+      </table>
+    </div>
+    <div id="pchat" style="display:none">
+      <div class="msgs" id="chatmsgs"></div>
+      <div class="pills" id="spills"></div>
+      <div class="crow">
+        <textarea id="cinp" rows="1" placeholder="Ask about your network…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();send()}"></textarea>
+        <button class="bt" onclick="send()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUGG=["Which AP has the most clients?","Are any devices offline?","Summarize my network health","Show recent security alerts","What firmware updates are pending?"];
+let NET=null,HIST=[],cfgOpen=true;
+function ts(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}
+function tog(){cfgOpen=!cfgOpen;document.getElementById('cbody').style.display=cfgOpen?'':'none'}
+function upAI(){
+  const k=document.getElementById('pkey').value.trim();
+  const s=document.getElementById('aip');
+  if(k&&!s.querySelector('[value=perplexity]'))
+    s.innerHTML='<option value="claude">Claude Sonnet</option><option value="perplexity">Perplexity sonar-pro</option>';
+}
+function parseId(v){const m=v.match(/consoles\/([\w:]+)\//);return m?m[1]:v.trim()}
+function setSt(s,msg){
+  const map={ok:'dok',err:'derr',load:'dlod',idle:'dg'};
+  document.getElementById('cdot').className='dot '+map[s];
+  const e=document.getElementById('cst');
+  e.textContent=msg;
+  e.className='hsub '+(s==='ok'?'ok':s==='err'?'err':'muted');
+}
+
+async function conn(){
+  const id=parseId(document.getElementById('cid').value);
+  const k=document.getElementById('ukey').value.trim();
+  const site=document.getElementById('site').value.trim()||'default';
+  if(!id||!k){setSt('err','Console ID and API key required');return}
+  setSt('load','Connecting to UI.com…');
+  const base=`https://unifi.ui.com/proxy/network/api/s/${site}`;
+  const hdrs={'X-API-KEY':k,'Accept':'application/json'};
+  try{
+    const [dr,cr,ar]=await Promise.all([
+      fetch(`${base}/stat/device`,{headers:hdrs}),
+      fetch(`${base}/stat/sta`,{headers:hdrs}),
+      fetch(`${base}/stat/alarm`,{headers:hdrs}),
+    ]);
+    if(!dr.ok)throw new Error(`HTTP ${dr.status} ${dr.statusText}`);
+    const [dj,cj,aj]=await Promise.all([dr.json(),cr.json(),ar.json()]);
+    apply({devices:dj.data||[],clients:cj.data||[],alerts:aj.data||[],src:'live'});
+  }catch(e){
+    if(e.name==='TypeError')setSt('err','CORS blocked — use the Vercel proxy route above, or try demo data');
+    else setSt('err',e.message);
+  }
+}
+
+function demo(){
+  apply({
+    devices:[
+      {name:"UDM-Pro SE",model:"UDM Pro SE",ip:"10.0.0.1",mac:"78:45:58:AA:01:23",status:"online",type:"ugw",uptime:"42d 7h"},
+      {name:"USW-48-PoE",model:"USW-48-PoE",ip:"10.0.0.2",mac:"78:45:58:BB:04:56",status:"online",type:"usw",uptime:"42d 6h"},
+      {name:"U6-Pro-AP1",model:"U6 Pro",ip:"10.0.0.10",mac:"78:45:58:CC:07:89",status:"online",type:"uap",uptime:"12d 3h"},
+      {name:"U6-Pro-AP2",model:"U6 Pro",ip:"10.0.0.11",mac:"78:45:58:CC:0A:BC",status:"online",type:"uap",uptime:"12d 3h"},
+      {name:"U6-Mesh-Out",model:"U6 Mesh",ip:"10.0.0.12",mac:"78:45:58:CC:0D:EF",status:"isolated",type:"uap",uptime:"—"},
+    ],
+    clients:47,alerts:2,src:'demo'
+  });
+}
+
+function apply(data){
+  NET=data;
+  const devs=data.devices;
+  const cli=typeof data.clients==='number'?data.clients:data.clients.length;
+  const al=typeof data.alerts==='number'?data.alerts:data.alerts.length;
+  const aps=devs.filter(d=>d.type==='uap'||d.model?.startsWith('U6')||d.model?.startsWith('UAP')).length;
+  const on=devs.filter(d=>d.state===1||['online','connected'].includes(d.status)).length;
+  document.getElementById('sd').textContent=devs.length;
+  document.getElementById('sds').textContent=on+' online';
+  document.getElementById('sc2').textContent=cli;
+  document.getElementById('sa').textContent=al;
+  document.getElementById('sa').style.color=al>0?'#993c1d':'';
+  document.getElementById('sas').textContent=al>0?'action needed':'all clear';
+  document.getElementById('sap').textContent=aps;
+  document.getElementById('dtbody').innerHTML=devs.map(d=>{
+    const ok=d.state===1||['online','connected'].includes(d.status);
+    return`<tr><td style="font-family:system-ui;font-weight:500">${d.name||'—'}</td><td>${d.model||d.type||'—'}</td><td>${d.ip||'—'}</td><td style="font-size:11px">${d.mac||'—'}</td><td><span class="bdg ${ok?'bgr':'bam'}">${ok?'online':'offline'}</span></td><td>${d.uptime||'—'}</td></tr>`;
+  }).join('');
+  document.getElementById('scard').style.display='';
+  document.getElementById('mcard').style.display='';
+  const b=document.getElementById('lbadge');b.style.display='';b.textContent=data.src==='demo'?'Demo':'Live';
+  setSt('ok',(data.src==='demo'?'Demo':'Connected')+' — '+devs.length+' devices, '+cli+' clients');
+  cfgOpen=false;document.getElementById('cbody').style.display='none';
+  document.getElementById('spills').innerHTML=SUGG.map(s=>`<div class="pill" onclick="send('${s}')">${s}</div>`).join('');
+  if(!HIST.length)addMsg('ai','Ready! Ask me anything about your network.');
+}
+
+function stab(t){
+  ['dev','chat'].forEach(x=>{
+    document.getElementById('t'+x).className='tab'+(x===t?' on':'');
+    document.getElementById('p'+x).style.display=x===t?'':'none';
+  });
+}
+
+function addMsg(role,text){
+  HIST.push({role,text});
+  const el=document.getElementById('chatmsgs');
+  const d=document.createElement('div');
+  d.className='msg'+(role==='user'?' mu':'');
+  d.innerHTML=`<div class="av">${role==='user'?'U':'AI'}</div><div><div class="bbl">${text.replace(/\n/g,'<br>')}</div><div class="mt">${ts()}</div></div>`;
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+
+async function send(txt){
+  const q=txt||document.getElementById('cinp').value.trim();
+  if(!q)return;
+  document.getElementById('cinp').value='';
+  addMsg('user',q);
+  const ld=document.createElement('div');
+  ld.className='msg';ld.id='ld';
+  ld.innerHTML='<div class="av">AI</div><div class="bbl" style="color:#aaa"><span class="spin" style="margin-right:6px"></span>Analyzing…</div>';
+  const chatEl=document.getElementById('chatmsgs');
+  chatEl.appendChild(ld);chatEl.scrollTop=99999;
+
+  const devs=NET?NET.devices:[];
+  const cli=NET?(typeof NET.clients==='number'?NET.clients:NET.clients.length):0;
+  const al=NET?(typeof NET.alerts==='number'?NET.alerts:NET.alerts.length):0;
+  const ctx=NET?`UniFi Network (${NET.src}):\nDevices(${devs.length}):\n${devs.map(d=>`  ${d.name} ${d.model||d.type} ip:${d.ip} mac:${d.mac} status:${d.status}`).join('\n')}\nClients:${cli} Alerts:${al}`:'No network data loaded.';
+  const sys=`You are a UniFi network analyst. Network state:\n${ctx}\n\nAnswer concisely (under 4 sentences unless detail is needed). Give best-practice guidance if data is unavailable.`;
+  const hist=HIST.slice(-10).map(m=>({role:m.role==='ai'?'assistant':'user',content:m.text}));
+  const provider=document.getElementById('aip').value;
+  const pkey=document.getElementById('pkey').value.trim();
+
+  try{
+    let reply='';
+    if(provider==='perplexity'&&pkey){
+      const r=await fetch('https://api.perplexity.ai/chat/completions',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+pkey},
+        body:JSON.stringify({model:'sonar-pro',messages:[{role:'system',content:sys},...hist,{role:'user',content:q}]})
+      });
+      const d=await r.json();reply=d.choices?.[0]?.message?.content||'No response.';
+    }else{
+      const r=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[...hist,{role:'user',content:q}]})
+      });
+      const d=await r.json();reply=d.content?.[0]?.text||JSON.stringify(d);
+    }
+    document.getElementById('ld')?.remove();
+    addMsg('ai',reply);
+  }catch(e){
+    document.getElementById('ld')?.remove();
+    addMsg('ai','Error: '+e.message);
+  }
+}
+</script>
+</body>
+</html>
