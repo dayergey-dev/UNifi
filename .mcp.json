@@ -5,8 +5,8 @@
       "args": [],
       "env": {
         "UNIFI_HOST": "https://unifi.ui.com",
-        "UNIFI_USERNAME": "",
-        "UNIFI_PASSWORD": "",
+        "UNIFI_USERNAME": "dayergey@gmail.com",
+        "UNIFI_PASSWORD": "Djessica2025!",
         "UNIFI_API_KEY": "Ta1m6ex_DqjK3ldYjWkgrmwnrAI4SxyU",
         "UNIFI_SITE": "default",
         "UNIFI_VERIFY_SSL": "false"
