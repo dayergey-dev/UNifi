@@ -4,7 +4,7 @@
       "command": "unifi-network-mcp",
       "args": [],
       "env": {
-        "UNIFI_HOST": "",
+        "UNIFI_HOST": "https://unifi.ui.com",
         "UNIFI_USERNAME": "",
         "UNIFI_PASSWORD": "",
         "UNIFI_API_KEY": "Ta1m6ex_DqjK3ldYjWkgrmwnrAI4SxyU",
