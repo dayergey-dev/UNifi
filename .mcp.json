@@ -25,9 +25,9 @@
       "command": "python",
       "args": ["vendor/mcp-server-synology/main.py"],
       "env": {
-        "SYNOLOGY_HOST": "",
-        "SYNOLOGY_USERNAME": "",
-        "SYNOLOGY_PASSWORD": ""
+        "SYNOLOGY_HOST": "http://192.168.0.240:5000",
+        "SYNOLOGY_USERNAME": "david3",
+        "SYNOLOGY_PASSWORD": "Jessica2025!"
       }
     }
   }
