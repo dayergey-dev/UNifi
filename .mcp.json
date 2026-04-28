@@ -7,6 +7,7 @@
         "UNIFI_HOST": "",
         "UNIFI_USERNAME": "",
         "UNIFI_PASSWORD": "",
+        "UNIFI_API_KEY": "Ta1m6ex_DqjK3ldYjWkgrmwnrAI4SxyU",
         "UNIFI_SITE": "default",
         "UNIFI_VERIFY_SSL": "false"
       }
