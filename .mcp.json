@@ -14,7 +14,12 @@
     },
     "sonicwall": {
       "type": "sse",
-      "url": "http://localhost:3000/mcp/v1/sse"
+      "url": "http://localhost:3000/mcp/v1/sse",
+      "env": {
+        "SONICWALL_HOST": "192.168.0.254",
+        "SONICWALL_USERNAME": "yyadmin",
+        "SONICWALL_PASSWORD": "Z*&@12--2024%(&)!@!#"
+      }
     },
     "synology": {
       "command": "python",
