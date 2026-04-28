@@ -4,29 +4,30 @@
       "command": "unifi-network-mcp",
       "args": [],
       "env": {
-        "UNIFI_HOST": "",
-        "UNIFI_USERNAME": "",
-        "UNIFI_PASSWORD": "",
+        "UNIFI_HOST": "https://unifi.ui.com",
+        "UNIFI_USERNAME": "dayergey@gmail.com",
+        "UNIFI_PASSWORD": "Djessica2025!",
+        "UNIFI_API_KEY": "Ta1m6ex_DqjK3ldYjWkgrmwnrAI4SxyU",
         "UNIFI_SITE": "default",
         "UNIFI_VERIFY_SSL": "false"
       }
     },
     "sonicwall": {
-      "command": "node",
-      "args": ["vendor/sonicwall-mcp-server/index.js"],
+      "type": "sse",
+      "url": "http://localhost:3000/mcp/v1/sse",
       "env": {
-        "SONICWALL_HOST": "",
-        "SONICWALL_USERNAME": "",
-        "SONICWALL_PASSWORD": ""
+        "SONICWALL_HOST": "192.168.0.254",
+        "SONICWALL_USERNAME": "yyadmin",
+        "SONICWALL_PASSWORD": "Z*&@12--2024%(&)!@!#"
       }
     },
     "synology": {
       "command": "python",
       "args": ["vendor/mcp-server-synology/main.py"],
       "env": {
-        "SYNOLOGY_HOST": "",
-        "SYNOLOGY_USERNAME": "",
-        "SYNOLOGY_PASSWORD": ""
+        "SYNOLOGY_HOST": "http://192.168.0.240:5000",
+        "SYNOLOGY_USERNAME": "david3",
+        "SYNOLOGY_PASSWORD": "Jessica2025!"
       }
     }
   }
